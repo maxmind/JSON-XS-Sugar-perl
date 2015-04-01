@@ -4,7 +4,7 @@ JSON::XS::Sugar - sugar for using JSON::XS
 
 # VERSION
 
-version 1.00
+version 1.01
 
 # SYNOPSIS
 
