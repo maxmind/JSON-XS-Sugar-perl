@@ -83,7 +83,7 @@ static OP *myck_entersub_json_string(pTHX_ OP *entersubop,
     argop->op_sibling = NULL;
     op_free(entersubop);
 
-    return newLISTOP(OP_STRINGIFY, 0, NULL, argop);
+    return newLISTOP(OP_STRINGIFY, 0, newOP(OP_PUSHMARK, 0), argop);
 }
 
 MODULE = JSON::XS::Sugar PACKAGE = JSON::XS::Sugar
