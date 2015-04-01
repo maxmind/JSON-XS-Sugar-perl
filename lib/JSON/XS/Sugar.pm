@@ -12,7 +12,7 @@ use strict;
 use Devel::CallChecker 0.003 ();
 use Types::Serialiser;
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 our @EXPORT_OK;
 
