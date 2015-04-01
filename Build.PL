@@ -45,38 +45,29 @@ Module::Build->subclass(code => q{
                 };
                 $self->SUPER::link_c($spec);
         }
-})->new(
-        module_name => "JSON::XS::Sugar",
-        license => "perl",
-        configure_requires => {
-                "Module::Build" => 0,
-                "perl" => "5.008001",
-                "strict" => 0,
-                "warnings" => 0,
-        },
-        build_requires => {
-                "Devel::CallChecker" => "0.003",
-                "ExtUtils::CBuilder" => "0.15",
-                "Module::Build" => 0,
-                "Test::More" => 0,
-                "Test::Warn" => 0,
-                "perl" => "5.014000",
-                "strict" => 0,
-                "warnings" => 0,
-        },
-        requires => {
-                "Devel::CallChecker" => "0.003",
-                "Exporter" => 0,
-                "Types::Serialiser" => 0,
-                "XSLoader" => 0,
-                "perl" => "5.014000",
-                "strict" => 0,
-                "warnings" => 0,
-        },
-        dynamic_config => 0,
-        meta_add => { distribution_type => "module" },
-        create_makefile_pl => "passthrough",
-        sign => 1,
-)->create_build_script;
+})->new( __mb_args() )->create_build_script();
+
+sub __mb_args {
+
+    # This is a funky way of allowing this code to run stand-alone and as a
+    # template to be processed by Dist::Zilla::Plugin::ModuleBuild::Custom
+    my $data = do { local $/; <DATA> };
+
+    if ( $data !~ /^\#/ ) {
+        my $args = eval $data;
+        return %{$args};
+    }
+    else {
+        return (
+            module_name          => 'JSON::XS::Sugar',
+            dist_abstract        => 'Whatever',
+            license              => 'perl',
+            recursive_test_files => 1,
+        );
+    }
+}
  
 1;
+
+__DATA__
+##{ ( my $args = Data::Dumper::Dumper( $plugin->module_build_args ) ) =~ s/\$VAR\d+ =//; $args ##}
